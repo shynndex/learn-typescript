@@ -60,10 +60,60 @@ function greet(name: string, title?: string) {
 
 // console.log(greet("An"));
 
-//Rest parameter:luôn có kiểu là 1 mảng,trong ví dụ này,đã gom các biến còn lại thành 1 mảng 
+//Rest parameter:luôn có kiểu là 1 mảng,trong ví dụ này,đã gom các biến còn lại thành 1 mảng
 function gatherFriends(groupName: string, ...members: string[]) {
   console.log(`Nhóm ${groupName}`);
   console.log(`Thành viên:${members.join(", ")}`);
 }
 
 gatherFriends("Đi biển", "An", "Bình", "Chi");
+
+// #6:type aliases
+
+//tên type phải capitalize
+export type Customer = {
+  id: number;
+  name: string;
+};
+
+export type UserResponse = {
+  success: boolean;
+  message: string;
+};
+
+//một số trường hợp viết hàm với các tham số truyền vào/trả về là obj khá phức tạp,gây dài dòng,ts cho phép viết bí danh để tái sử dụng
+// function greetCustomer(customer: { id: number; name: string }): {
+//   success: boolean;
+//   message: string;
+// } {
+//   return {
+//     success: true,
+//     message: `Xin chào ${customer.name},cảm ơn bạn đã đến với cửa hàng!`,
+//   };
+// }
+
+function greetCustomer(customer: Customer): UserResponse {
+  return {
+    success: true,
+    message: `Xin chào ${customer.name},cảm ơn bạn đã đến với cửa hàng!`,
+  };
+}
+
+//Function signature
+
+//định nghĩa kiểu hàm,bất kì hàm nào có kiểu SupportFunction thì sẽ có tham số là customer và trả về UserResponse
+type SupportFunction = (customer: Customer) => UserResponse;
+
+const greetCustomer2: SupportFunction = (customer) => {
+  return {
+    success: true,
+    message: `Xin chào ${customer.name},cảm ơn bạn đã đến với cửa hàng!`,
+  };
+};
+
+const fareWellCustomer: SupportFunction = (customer) => {
+  return {
+    success: true,
+    message: `Hẹn gặp lại ${customer.name},chúc bạn một ngày vui vẻ!`,
+  };
+};
