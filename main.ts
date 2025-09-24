@@ -117,3 +117,70 @@ const fareWellCustomer: SupportFunction = (customer) => {
     message: `Hẹn gặp lại ${customer.name},chúc bạn một ngày vui vẻ!`,
   };
 };
+
+// #7 : Union & Literal Type
+// Union Type là một cách để khai báo một biến có thể nhận một trong nhiều kiểu dữ liệu khác nhau.
+
+// sử dụng ký hiệu | (dấu "pipe") để phân tách các kiểu.
+type UserId = number | string;
+
+function getTicketInfo(id: string | number) {
+  if (typeof id === "string") {
+    return `Tìm vé với ID ${id.toUpperCase()}`;
+  } else {
+    return `Tìm vé với ID ${id.toFixed(0)}`;
+  }
+}
+
+getTicketInfo(123);
+
+let mixedArray: (string | number)[] = [1, 2, "ba", "bốn"];
+
+mixedArray.push(5);
+// mixedArray.push(false);
+
+type UserType = {
+  userName: string;
+  age: number;
+  phone: string;
+  theme: string;
+};
+
+type UserType2 = {
+  userName: string;
+  age: number;
+  phone: string;
+  theme: "dark" | "light";
+};
+
+//literal types
+//Literal Types là một tính năng mạnh mẽ trong TypeScript cho phép giới hạn giá trị của một biến vào một tập hợp cụ thể các giá trị xác định (thường là chuỗi, số hoặc boolean)
+
+const u2: UserType2 = {
+  userName: "shyzz",
+  age: 12,
+  phone: "01223",
+  theme: "light",
+};
+
+type paymentMethods = "zalopay" | "momo" | "cod";
+type ApiMethods = "GET" | "PUT" | "POST" | "DELETE";
+
+// #8:Intersection types (&)
+
+//Intersection Types cho phép kết hợp nhiều kiểu dữ liệu lại với nhau thành một kiểu duy nhất, trong đó tất cả các thuộc tính từ các kiểu đều được giữ nguyên.
+
+type Person = {
+  name: string;
+};
+
+type Worker = {
+  job: string;
+};
+
+type Employee = Person & Worker; // employee sẽ có cả 2 kiểu type
+
+const e1: Employee = {
+  name: "shyz",
+  job: "hehe",
+};
